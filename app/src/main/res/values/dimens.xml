@@ -1,0 +1,5 @@
+<resources>
+    <!-- Text size-->
+    <dimen name="weathercast_item_date_text_size">18dp</dimen>
+    <dimen name="small_text_size">36dp</dimen>
+</resources>

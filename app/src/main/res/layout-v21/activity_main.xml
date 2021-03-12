@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:arcbar="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_blue"
+    tools:context=".MainActivity">
+
+    <ListView
+        android:id="@+id/weathercastList"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clickable="false"
+        arcbar:layout_constraintBottom_toBottomOf="parent"
+        arcbar:layout_constraintEnd_toStartOf="@+id/control_sprinkle"
+        arcbar:layout_constraintHorizontal_bias="0.0"
+        arcbar:layout_constraintStart_toStartOf="parent"
+        arcbar:layout_constraintTop_toTopOf="@+id/control_sprinkle" />
+
+    <GridLayout
+        android:id="@+id/control_sprinkle"
+        android:layout_width="260dp"
+        android:layout_height="631dp"
+        android:layout_marginTop="8dp"
+        android:layout_weight="1"
+        android:columnCount="2"
+        android:rowCount="4"
+        arcbar:layout_constraintBottom_toBottomOf="parent"
+        arcbar:layout_constraintEnd_toEndOf="parent"
+        arcbar:layout_constraintStart_toStartOf="parent"
+        arcbar:layout_constraintTop_toTopOf="parent">
+
+        <CheckBox
+            android:id="@+id/water_control_sprinkle"
+            android:layout_width="190dp"
+            android:layout_height="170dp"
+            android:layout_row="0"
+            android:layout_rowSpan="1"
+            android:layout_column="0"
+            android:layout_columnSpan="2"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/water_control"
+            android:button="@null"
+            android:checked="true"
+            android:contentDescription="@string/water_control_desc"
+            android:onClick="onSprinkleClick" />
+
+        <TextView
+            android:id="@+id/labelTemp"
+            android:layout_width="wrap_content"
+            android:layout_height="59dp"
+            android:layout_row="1"
+            android:layout_rowSpan="1"
+            android:layout_column="0"
+            android:layout_columnSpan="1"
+            android:layout_columnWeight="1"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:contentDescription="@string/temperature_label"
+            android:fontFamily="sans-serif-thin"
+            android:text="Temp"
+            android:textColor="@color/dark_grey"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/labelHumidity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="1"
+            android:layout_rowSpan="1"
+            android:layout_column="1"
+            android:layout_columnSpan="1"
+            android:layout_columnWeight="1"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="30dp"
+            android:contentDescription="@string/humidity_label"
+            android:fontFamily="sans-serif-thin"
+            android:text="Humidity"
+            android:textColor="@color/dark_grey"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/controlTemp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="2"
+            android:layout_rowSpan="1"
+            android:layout_column="0"
+            android:layout_columnSpan="1"
+            android:layout_columnWeight="1"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5dp"
+            android:fontFamily="sans-serif-thin"
+            android:text="19°"
+            android:textColor="@color/dark_grey"
+            android:textSize="35sp" />
+
+        <TextView
+            android:id="@+id/controlHumidity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="2"
+            android:layout_rowSpan="1"
+            android:layout_column="1"
+            android:layout_columnSpan="1"
+            android:layout_columnWeight="1"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5dp"
+            android:fontFamily="sans-serif-thin"
+            android:text="69%"
+            android:textColor="@color/dark_grey"
+            android:textSize="35sp" />
+
+        <com.example.androidui.ArcBar
+            android:id="@+id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="143dp"
+            android:layout_row="3"
+            android:layout_rowSpan="1"
+            android:layout_column="0"
+            android:layout_columnSpan="1"
+            android:layout_columnWeight="1"
+            android:layout_marginTop="5dp"
+            android:indeterminate="false"
+            android:indeterminateOnly="false"
+            android:max="100"
+            android:progress="34"
+            arcbar:arcColor="@color/ivory"
+            arcbar:progressColor="@color/dark_blue">
+
+        </com.example.androidui.ArcBar>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/water"
+            android:layout_width="99dp"
+            android:layout_height="158dp"
+            android:layout_row="3"
+            android:layout_rowSpan="1"
+            android:layout_column="1"
+            android:layout_columnSpan="1"
+            android:layout_columnWeight="1"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/icon_water">
+
+            <TextView
+                android:id="@+id/weatherNotification"
+                android:layout_width="38dp"
+                android:layout_height="43dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="32dp"
+                android:background="@drawable/notification_point_selector"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:gravity="center"
+                android:text="1"
+                android:textColor="@color/ivory"
+                android:textSize="18sp"
+                android:textStyle="normal"
+                arcbar:layout_constraintEnd_toEndOf="parent"
+                arcbar:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </GridLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/waterAreaList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@android:color/transparent"
+        android:importantForAccessibility="no"
+        arcbar:layout_constraintEnd_toEndOf="parent"
+        arcbar:layout_constraintHorizontal_bias="0.86"
+        arcbar:layout_constraintStart_toEndOf="@+id/control_sprinkle"
+        arcbar:layout_constraintTop_toTopOf="@+id/control_sprinkle"
+        android:overScrollMode="never"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
