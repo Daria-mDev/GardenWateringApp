@@ -9,18 +9,22 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 import java.util.ArrayList;
+import androidx.lifecycle.ViewModelProviders;
+import java.util.List;
+
+
 
 
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    private WaterAreaViewAdapter mAdapter;
-    private RecyclerView.LayoutManager layoutManager;
     private CheckBox water_control_sprinkle;
     TextView controlTemp, controlHumidity;
-    ArrayList<WeatherCast> weathercasts = new ArrayList<>();
+    List<WeatherCast> weatherCasts = new ArrayList<>();
     ListView weatherCastList;
     ArrayList<WaterArea> locationsList = new ArrayList<>();
+    WeatherForecastViewModel weatherForecastViewModel;
+    WeatherForecastAdapter stateAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,16 +36,18 @@ public class MainActivity extends AppCompatActivity {
         controlTemp = findViewById(R.id.controlTemp);
         controlHumidity = findViewById(R.id.controlHumidity);
 
-        weatherCastList = (ListView) findViewById(R.id.weathercastList);
+        weatherCastList = findViewById(R.id.weathercastList);
 
-        WeatherForecastAdapter stateAdapter = new WeatherForecastAdapter(this, R.layout.item_weathercast, weathercasts);
+        stateAdapter = new WeatherForecastAdapter(this, R.layout.item_weathercast, weatherCasts);
         weatherCastList.setAdapter(stateAdapter);
 
+        setWeatherForecast();
+
         recyclerView = findViewById(R.id.waterAreaList);
-        layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
 
-        mAdapter = new WaterAreaViewAdapter(this, locationsList);
+        WaterAreaViewAdapter mAdapter = new WaterAreaViewAdapter(this, locationsList);
         recyclerView.setAdapter(mAdapter);
 
         water_control_sprinkle = findViewById(R.id.water_control_sprinkle);
@@ -49,9 +55,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setInitialData(){
-        weathercasts.add(new WeatherCast ("February 17, 2021",  R.drawable.cloudy,"19 \u00B0"));
-        weathercasts.add(new WeatherCast ("February 18, 2021",  R.drawable.rain,"21 \u00B0"));
-        weathercasts.add(new WeatherCast ("February 17, 2021",  R.drawable.partly_cloudy,"23 \u00B0"));
+        weatherCasts.add(new WeatherCast ("February 17, 2021",  R.drawable.cloudy,"19 \u00B0"));
+        weatherCasts.add(new WeatherCast ("February 18, 2021",  R.drawable.rain,"21 \u00B0"));
+        weatherCasts.add(new WeatherCast ("February 17, 2021",  R.drawable.partly_cloudy,"23 \u00B0"));
 
         locationsList.add(new WaterArea(false,"BACKYARD",false));
         locationsList.add(new WaterArea(false,"BACK PATIO",true));
@@ -70,4 +76,26 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void setWeatherForecast() {
+        weatherForecastViewModel = ViewModelProviders.of(this).get(WeatherForecastViewModel.class);
+        weatherForecastViewModel.getWeatherCastMutableLiveData().observe(this, castList -> {
+            if (castList != null) {
+                weatherCasts = castList;
+                stateAdapter.setWeatherCasts(weatherCasts);
+            }
+        });
+
+        weatherForecastViewModel.getCurrentWeatherMutableLiveData().observe(this, currentWeather -> {
+            if (currentWeather != null) {
+                String tmpTemp = (int)currentWeather.component1() + "\u00B0";
+                String tmpHumidity = currentWeather.component2()+ "%";
+
+                controlTemp.setText(tmpTemp);
+                controlHumidity.setText(tmpHumidity);
+            }
+        });
+        weatherForecastViewModel.getWeatherForecast();
+ }
+
 }
+

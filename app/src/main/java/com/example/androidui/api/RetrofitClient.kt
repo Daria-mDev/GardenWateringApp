@@ -8,6 +8,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import com.example.androidui.api.model.CurrentWeatherForecast
 import com.example.androidui.api.model.WeatherForecast
+import io.reactivex.rxjava3.core.Single
+import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 
 private const val BASE_URL = "https://api.openweathermap.org"
 
@@ -23,21 +25,22 @@ object RetrofitClient {
         val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
 
         return Retrofit.Builder()
-            .baseUrl(baseUrl)
-            .client(client)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+                .baseUrl(baseUrl)
+                .client(client)
+                .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
     }
 
-    fun getWeatherForecast(): Call<WeatherForecast> {
+    fun getWeatherForecast(): Single<WeatherForecast> {
         return api.getWeatherForecast()
     }
 
-    fun getCurrentWeather(): Call<CurrentWeatherForecast> {
+    fun getCurrentWeather(): Single<CurrentWeatherForecast> {
         return api.getCurrentWeatherForecast()
     }
 
-    fun getImage(imageCode: String): Call<ResponseBody> {
+    fun getImage(imageCode: String): Single<ResponseBody> {
         return api.getWeatherImage(imageCode)
     }
 }
