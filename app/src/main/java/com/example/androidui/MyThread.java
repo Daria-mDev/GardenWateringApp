@@ -36,7 +36,7 @@ public class MyThread extends Thread {
                 public void onResponse(@NotNull Call<CurrentWeatherForecast> call, @NotNull Response<CurrentWeatherForecast> response) {
                     tmpTemp = ((int) Objects.requireNonNull(response.body()).component2().component1()) + "\u00B0";
                     tmpHumidity = response.body().component2().component2() + "%";
-                    mainActivity.runOnUiThread(() -> {
+                    mainActivity.myHandler.post(() -> {
                         mainActivity.controlTemp.setText(tmpTemp);
                         mainActivity.controlHumidity.setText(tmpHumidity);
                     });
@@ -57,7 +57,7 @@ public class MyThread extends Thread {
                         mainActivity.weatherCasts.add(new WeatherCast(dailyForecast.getDate(), R.drawable.partly_cloudy, (int)dailyForecast.getTemp().component1() + "\u00B0"));
                     }
 
-                    mainActivity.runOnUiThread(() -> {
+                    mainActivity.myHandler.post(() -> {
                         WeatherForecastAdapter weatherForecastAdapter = new WeatherForecastAdapter(mainActivity, R.layout.item_weathercast, mainActivity.weatherCasts);
                         mainActivity.weatherCastList.setAdapter(weatherForecastAdapter);
                     });

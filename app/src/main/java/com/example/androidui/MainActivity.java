@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ListView;
@@ -20,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     ListView weatherCastList;
     ArrayList<WaterArea> locationsList = new ArrayList<>();
     MyThread myThread;
+    Handler myHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
         weatherCastList = findViewById(R.id.weathercastList);
 
+        myHandler = new Handler();
         myThread = new MyThread( this);
         myThread.start();
 
