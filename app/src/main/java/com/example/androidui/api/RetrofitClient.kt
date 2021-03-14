@@ -8,6 +8,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import com.example.androidui.api.model.CurrentWeatherForecast
 import com.example.androidui.api.model.WeatherForecast
+import retrofit2.Response
 
 private const val BASE_URL = "https://api.openweathermap.org"
 
@@ -29,15 +30,15 @@ object RetrofitClient {
             .build()
     }
 
-    fun getWeatherForecast(): Call<WeatherForecast> {
+    suspend fun getWeatherForecast(): Response<WeatherForecast> {
         return api.getWeatherForecast()
     }
 
-    fun getCurrentWeather(): Call<CurrentWeatherForecast> {
+    suspend fun getCurrentWeather(): Response<CurrentWeatherForecast> {
         return api.getCurrentWeatherForecast()
     }
 
-    fun getImage(imageCode: String): Call<ResponseBody> {
+    suspend fun getImage(imageCode: String): Response<ResponseBody> {
         return api.getWeatherImage(imageCode)
     }
 }

@@ -43,4 +43,9 @@ public class WeatherForecastAdapter extends ArrayAdapter<WeatherCast> {
     public boolean isEnabled(int position) {
         return false;
     }
+
+    public void setWeatherCasts(List<WeatherCast> weatherCasts) {
+        this.weatherCasts = weatherCasts;
+        notifyDataSetChanged();
+    }
 }
